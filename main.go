@@ -3,19 +3,24 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"learn/shape"
 	"net/http"
 	"time"
 )
 
 type Welcome struct {
-	Name string
-	Time string
+	Detail string
+	Name   string
+	Time   string
 }
 
 func main() {
-	welcome := Welcome{"Rezky", time.Now().Format(time.Stamp)}
+	welcome := Welcome{"", "user", time.Now().Format(time.Stamp)}
 	templates := template.Must(template.ParseFiles("template/welcome-template.html"))
+	// var r shape.Shape = shape.Rect{10, 3}
+	var c shape.Shape = shape.Circle{5}
 
+	welcome.Detail = shape.Detail(c)
 	http.Handle("/statics/",
 		http.StripPrefix("/statics/",
 			http.FileServer(http.Dir("static"))))
